@@ -1,10 +1,12 @@
 from django.db import models
 
+
 class Category(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
+
 
 class Book(models.Model):
     status_book = [
@@ -22,13 +24,11 @@ class Book(models.Model):
     rental_period = models.IntegerField(blank=True, null=True)
     active = models.BooleanField(default=True)
     status = models.CharField(max_length=50, choices=status_book, default='available', blank=True, null=True)
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, blank=True, null=True,related_name='books')
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, blank=True, null=True, related_name='books')
 
     def __str__(self):
         return f'{self.title} by {self.author}' if self.author else self.title
+
     @property
     def title_and_author(self):
         return f'{self.title} by {self.author}' if self.author else self.title
-
-
-category=Category.objects.get(id=1)
